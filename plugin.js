@@ -17,13 +17,12 @@ const TYPES = {
 };
 const TYPE_ORDER = ["extend", "post", "draft", "research", "note"];
 const ICON_TO_TYPE = { "🌱": "extend", "📕": "post", "📝": "draft", "🔬": "research", "💬": "note" };
-const TOPIC_COLORS = ["#ff5a6e", "#ff8a3d", "#e5a50a", "#35b37e", "#3b9ded", "#8b6cf0", "#e667c4"];
 const TOPIC_ICON = "💡";
 const LINK_ICON = "🔗";
 const HEX64 = /^[0-9a-f]{64}$/;
 const MAX_TEXT = 20000;
 const PAGE_ICON =
-  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzAwMCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMy40Ii8+PGNpcmNsZSBjeD0iMjEuMjAiIGN5PSIxMi4wMCIgcj0iMS45Ii8+PHBhdGggZD0iTTE2LjYwIDEyLjAwTDE4LjYwIDEyLjAwIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48Y2lyY2xlIGN4PSIxNy44MCIgY3k9IjE3LjgwIiByPSIxLjMiLz48cGF0aCBkPSJNMTUuMjUgMTUuMjVMMTUuOTYgMTUuOTYiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjEyLjAwIiBjeT0iMjEuMjAiIHI9IjEuOSIvPjxwYXRoIGQ9Ik0xMi4wMCAxNi42MEwxMi4wMCAxOC42MCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iNi4yMCIgY3k9IjE3LjgwIiByPSIxLjMiLz48cGF0aCBkPSJNOC43NSAxNS4yNUw4LjA0IDE1Ljk2IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48Y2lyY2xlIGN4PSIyLjgwIiBjeT0iMTIuMDAiIHI9IjEuOSIvPjxwYXRoIGQ9Ik03LjQwIDEyLjAwTDUuNDAgMTIuMDAiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjYuMjAiIGN5PSI2LjIwIiByPSIxLjMiLz48cGF0aCBkPSJNOC43NSA4Ljc1TDguMDQgOC4wNCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMTIuMDAiIGN5PSIyLjgwIiByPSIxLjkiLz48cGF0aCBkPSJNMTIuMDAgNy40MEwxMi4wMCA1LjQwIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48Y2lyY2xlIGN4PSIxNy44MCIgY3k9IjYuMjAiIHI9IjEuMyIvPjxwYXRoIGQ9Ik0xNS4yNSA4Ljc1TDE1Ljk2IDguMDQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==";
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iY3VycmVudENvbG9yIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIzLjQiLz48Y2lyY2xlIGN4PSIyMS4yMCIgY3k9IjEyLjAwIiByPSIxLjkiLz48cGF0aCBkPSJNMTYuNjAgMTIuMDBMMTguNjAgMTIuMDAiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMTcuODAiIGN5PSIxNy44MCIgcj0iMS4zIi8+PHBhdGggZD0iTTE1LjI1IDE1LjI1TDE1Ljk2IDE1Ljk2IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjEyLjAwIiBjeT0iMjEuMjAiIHI9IjEuOSIvPjxwYXRoIGQ9Ik0xMi4wMCAxNi42MEwxMi4wMCAxOC42MCIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48Y2lyY2xlIGN4PSI2LjIwIiBjeT0iMTcuODAiIHI9IjEuMyIvPjxwYXRoIGQ9Ik04Ljc1IDE1LjI1TDguMDQgMTUuOTYiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMi44MCIgY3k9IjEyLjAwIiByPSIxLjkiLz48cGF0aCBkPSJNNy40MCAxMi4wMEw1LjQwIDEyLjAwIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjYuMjAiIGN5PSI2LjIwIiByPSIxLjMiLz48cGF0aCBkPSJNOC43NSA4Ljc1TDguMDQgOC4wNCIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMS4yIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48Y2lyY2xlIGN4PSIxMi4wMCIgY3k9IjIuODAiIHI9IjEuOSIvPjxwYXRoIGQ9Ik0xMi4wMCA3LjQwTDEyLjAwIDUuNDAiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMTcuODAiIGN5PSI2LjIwIiByPSIxLjMiLz48cGF0aCBkPSJNMTUuMjUgOC43NUwxNS45NiA4LjA0IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==";
 const URL_RE = /https?:\/\/[^\s<>"'）】]+/g;
 
 // ---------- pure helpers ----------
@@ -76,8 +75,8 @@ function parseChild(content) {
       .trim();
     return { type: ICON_TO_TYPE[icon], body };
   }
-  if (/xiaohongshu\.com|xhslink\.com/i.test(text)) return { type: "post", body: text };
-  return { type: "note", body: text };
+  // Anything unmarked is ordinary chat: it stays in the channel, off the map.
+  return undefined;
 }
 
 const XHS_URL = /xiaohongshu\.com|xhslink\.com/i;
@@ -179,13 +178,22 @@ function buildGraph(events) {
   }
   const topics = new Map();
   const replies = [];
+  // Unmarked chat, kept so an agent can decide what is worth filing.
+  const loose = [];
+  const chat = (event, under) => loose.push({ id: event.id, author: event.pubkey, at: event.created_at, text: event.content.trim(), under });
   for (const event of byId.values()) {
     const refs = event.tags.filter((tag) => tag[0] === "e" && HEX64.test(tag[1] || ""));
     const isCopy = event.tags.some((tag) => tag[0] === "buzz:copy-of" || tag[0] === "buzz:sent-from-thread");
     if (!refs.length) {
-      const text = event.content.trim().replace(new RegExp(`^${TOPIC_ICON}\\s*`), "");
-      // 📌 marks a channel notice (how-to, rules): it stays in the chat, off the map.
-      if (!text || isCopy || /^(📌|🔗)/u.test(event.content.trim())) continue;
+      const raw = event.content.trim();
+      if (!raw || isCopy) continue;
+      // Only a message that opens with 💡 is a topic. 📌 is a channel notice.
+      if (!raw.startsWith(TOPIC_ICON)) {
+        if (!/^(📌|🔗)/u.test(raw)) chat(event, undefined);
+        continue;
+      }
+      const text = raw.slice(TOPIC_ICON.length).trim();
+      if (!text) continue;
       const title = firstLine(text);
       const body = text.split("\n").slice(1).join("\n").trim();
       topics.set(event.id, {
@@ -220,6 +228,10 @@ function buildGraph(events) {
     }
     if (!text) continue;
     const parsed = parseChild(text);
+    if (!parsed) {
+      chat(event, root);
+      continue;
+    }
     const child = {
       id: event.id,
       kind: "child",
@@ -270,11 +282,49 @@ function buildGraph(events) {
     topics: [...topics.values()].sort((a, b) => a.id.localeCompare(b.id)),
     links: uniqueLinks,
     nodes,
+    // Chat under a message that is not a topic is not about any topic.
+    loose: loose.map((item) => ({ ...item, under: topics.has(item.under) ? item.under : undefined })).sort((a, b) => b.at - a.at),
   };
 }
 
-const topicColour = (id) => TOPIC_COLORS[Math.floor(hash(id, 9) * TOPIC_COLORS.length)];
-const topicRadius = (topic) => 22 + Math.min(topic.count, 12) * 1.5;
+/** One ink, several strengths: the map is monochrome and follows the theme. */
+const ink = (strength) => `color-mix(in srgb, var(--text-primary) ${strength}%, var(--bg-app, #17181b))`;
+const topicColour = () => ink(78);
+// A topic grows with what has been filed under it: area, not radius, tracks the count.
+const topicRadius = (topic) => 26 + Math.min(52, Math.sqrt(topic.count) * 10);
+const childRadius = (node) => 19 + Math.min(node.children.length, 6) * 2.2;
+/**
+ * The outline of one drop at a moment in time: a single closed curve whose
+ * radius swells and settles in a few slow, low waves, so the edge is always
+ * smooth and the drop reads as one body of liquid. `swell` (0..1) pushes out
+ * one soft bulge per piece inside it: the drop about to divide, still whole.
+ */
+function dropPath(id, radius, time, buds = 0, swell = 0) {
+  const steps = 32;
+  const a = hash(id, 21) * 6.283;
+  const b = hash(id, 22) * 6.283;
+  const c = hash(id, 23) * 6.283;
+  const fast = 0.55 + hash(id, 24) * 0.35;
+  const slow = 0.32 + hash(id, 25) * 0.3;
+  const xs = [];
+  const ys = [];
+  for (let i = 0; i < steps; i++) {
+    const angle = (i / steps) * 6.283185;
+    const wave =
+      1 +
+      0.075 * Math.sin(2 * angle + a + time * fast) +
+      0.05 * Math.sin(3 * angle + b - time * slow) +
+      0.03 * Math.sin(angle + c + time * 0.4) +
+      (buds ? swell * 0.17 * (0.5 + 0.5 * Math.cos(buds * (angle + Math.PI / 2))) ** 2 : 0);
+    xs.push(Math.cos(angle) * radius * wave);
+    ys.push(Math.sin(angle) * radius * wave);
+  }
+  // Curve through the midpoints, steered by the samples: no corners anywhere.
+  const mid = (i) => `${((xs[i] + xs[(i + 1) % steps]) / 2).toFixed(1)} ${((ys[i] + ys[(i + 1) % steps]) / 2).toFixed(1)}`;
+  let path = `M${mid(steps - 1)}`;
+  for (let i = 0; i < steps; i++) path += `Q${xs[i].toFixed(1)} ${ys[i].toFixed(1)} ${mid(i)}`;
+  return `${path}Z`;
+}
 
 /** Deterministic scatter: the same topics land in the same place for everyone. */
 function layoutTopics(topics, links) {
@@ -287,7 +337,7 @@ function layoutTopics(topics, links) {
   });
   const index = new Map(topics.map((topic, i) => [topic.id, i]));
   const pairs = links.map((link) => [index.get(link.a), index.get(link.b)]).filter(([a, b]) => a >= 0 && b >= 0);
-  const minGap = 158;
+  const radii = topics.map(topicRadius);
   const iterations = n > 250 ? 30 : 70;
   for (let step = 0; step < iterations; step++) {
     for (let i = 0; i < n; i++) {
@@ -295,6 +345,7 @@ function layoutTopics(topics, links) {
         let dx = points[j].x - points[i].x;
         let dy = points[j].y - points[i].y;
         let distance = Math.hypot(dx, dy);
+        const minGap = radii[i] + radii[j] + 104;
         if (distance >= minGap) continue;
         if (distance < 0.01) {
           dx = hash(topics[i].id, 3) - 0.5;
@@ -325,34 +376,40 @@ function layoutTopics(topics, links) {
   return layout;
 }
 
-/** Radial tree around a topic: each subtree gets an angular sector by its size. */
-function burstLayout(topic) {
+/**
+ * Where a topic's content sits once it has split. The first ring surrounds the
+ * topic; a piece that has been split again fans its own children outward.
+ */
+function burstLayout(topic, expanded) {
   const offsets = new Map();
   const first = topic.children.length;
   if (!first) return { offsets, radius: 0 };
-  // Content shows as two-line cards, so rings are wider than a ring of dots needs.
-  const base = Math.min(300, Math.max(176, first * 21));
-  const gap = 150;
+  const dense = first > 8;
+  const base = Math.max(topicRadius(topic) + 118, (first * (dense ? 78 : 132)) / (Math.PI * 2));
   let radius = base;
-  const weight = (node) => (node.children.length ? node.children.reduce((sum, child) => sum + weight(child), 0) : 1);
-  const place = (nodes, from, to, depth, origin) => {
-    const total = nodes.reduce((sum, node) => sum + weight(node), 0);
-    let cursor = from;
-    nodes.forEach((node, i) => {
-      const span = ((to - from) * weight(node)) / total;
-      const mid = cursor + span / 2;
-      const stagger = depth === 1 && nodes.length > 7 && i % 2 ? 66 : 0;
-      const distance = base + (depth - 1) * gap + stagger;
-      radius = Math.max(radius, distance);
-      offsets.set(node.id, { dx: Math.cos(mid) * distance, dy: Math.sin(mid) * distance, parent: origin });
-      if (node.children.length) {
-        const wide = Math.max(span, Math.min(Math.PI, node.children.length * 0.42));
-        place(node.children, mid - wide / 2, mid + wide / 2, depth + 1, node.id);
-      }
-      cursor += span;
+  const fan = (node, x, y, angle, depth) => {
+    if (!node.children.length || !expanded.has(node.id)) return;
+    const count = node.children.length;
+    const reach = Math.max(132, (count * 120) / Math.PI);
+    const spread = count === 1 ? 0 : Math.min(Math.PI * 1.15, count * 0.62);
+    node.children.forEach((child, i) => {
+      const turn = count === 1 ? angle : angle - spread / 2 + (spread * i) / (count - 1);
+      const dx = x + Math.cos(turn) * reach;
+      const dy = y + Math.sin(turn) * reach;
+      offsets.set(child.id, { dx, dy, parent: node.id, depth });
+      radius = Math.max(radius, Math.hypot(dx, dy));
+      fan(child, dx, dy, turn, depth + 1);
     });
   };
-  place(topic.children, -Math.PI / 2, Math.PI * 1.5, 1, topic.id);
+  topic.children.forEach((node, i) => {
+    const angle = -Math.PI / 2 + (Math.PI * 2 * i) / first;
+    const distance = base + (dense && i % 2 ? 92 : 0);
+    const dx = Math.cos(angle) * distance;
+    const dy = Math.sin(angle) * distance;
+    offsets.set(node.id, { dx, dy, parent: topic.id, depth: 1 });
+    radius = Math.max(radius, distance);
+    fan(node, dx, dy, angle, 2);
+  });
   return { offsets, radius };
 }
 
@@ -379,13 +436,16 @@ function saveChoice(scope, channelId) {
 }
 
 const STYLE = `
-.xtb-dot{transition:box-shadow .2s ease,filter .2s ease}
-.xtb-topic:hover .xtb-dot,.xtb-topic:focus-visible .xtb-dot{filter:brightness(1.08)}
-.xtb-topic:focus-visible,.xtb-pill:focus-visible{outline:2px solid var(--text-primary);outline-offset:3px}
-.xtb-pill{transition:box-shadow .15s ease,transform .15s ease}
-.xtb-pill:hover{box-shadow:0 4px 14px rgba(0,0,0,.14)}
+.xtb-goo{position:absolute;inset:0;pointer-events:none;filter:url(#xtb-goo)}
+.xtb-drop{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.xtb-drop path{transition:fill .35s ease}
+.xtb-born{animation:xtb-split .55s cubic-bezier(.34,1.56,.64,1) backwards}
+.xtb-face{transition:transform .28s cubic-bezier(.34,1.56,.64,1)}
+.xtb-topic:active .xtb-face,.xtb-pill:active .xtb-face{transform:scale(.9)}
+@keyframes xtb-split{from{transform:scale(.1);opacity:0}}
+.xtb-topic:focus-visible,.xtb-pill:focus-visible{outline:2px solid var(--text-primary);outline-offset:4px}
 @keyframes xtb-pulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.6);opacity:0}}
-@media (prefers-reduced-motion: reduce){.xtb-ring{animation:none!important;display:none}}
+@media (prefers-reduced-motion: reduce){.xtb-ring{animation:none!important;display:none}.xtb-born{animation:none!important}}
 .xtb-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:28px;padding:0 10px;box-sizing:border-box;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--text-secondary);font:inherit;font-size:13px;font-weight:500;line-height:1;white-space:nowrap;cursor:pointer;flex-shrink:0;transition:background .12s ease,color .12s ease,border-color .12s ease,opacity .12s ease,transform .06s ease}
 .xtb-btn:hover{background:var(--surface-hover);color:var(--text-primary)}
 .xtb-btn:active{transform:scale(.97)}
@@ -560,6 +620,45 @@ export function apply(ctx) {
     );
   }
 
+  // Who is who, refreshed by the board each time profiles change.
+  const people = { name: (pubkey) => `${pubkey.slice(0, 6)}…`, avatar: () => undefined, person: (pubkey) => pubkey };
+
+  /** Whose it is: a face and a name. Falls back to an initial when there is no picture. */
+  function Author({ pubkey, size = 18, after, style }) {
+    // What an agent files belongs to the person it works for.
+    const person = people.person(pubkey);
+    const name = people.name(person);
+    const source = people.avatar(person);
+    const hint = person === pubkey ? name : `${name}（由 ${people.name(pubkey)} 代填）`;
+    const [broken, setBroken] = useState(null);
+    const disc = { width: size, height: size, borderRadius: "50%", flexShrink: 0 };
+    return h(
+      "span",
+      { className: "xtb-author", title: hint, style: { display: "inline-flex", alignItems: "center", gap: Math.round(size / 3), minWidth: 0, ...style } },
+      source && source !== broken
+        ? h("img", { src: source, alt: "", draggable: false, onError: () => setBroken(source), style: { ...disc, objectFit: "cover", background: "var(--border)" } })
+        : h(
+            "span",
+            {
+              "aria-hidden": true,
+              style: {
+                ...disc,
+                display: "grid",
+                placeItems: "center",
+                background: ink(34),
+                color: "var(--text-primary)",
+                fontSize: Math.round(size * 0.56),
+                fontWeight: 600,
+                lineHeight: 1,
+              },
+            },
+            [...name.trim()][0] || "?",
+          ),
+      h("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, name),
+      after ? h("span", { style: { flexShrink: 0, color: "var(--text-tertiary)" } }, after) : null,
+    );
+  }
+
   function Linked({ text, style }) {
     const parts = [];
     let last = 0;
@@ -590,9 +689,13 @@ export function apply(ctx) {
 
   // ----- the floating map -----
 
-  function Canvas({ graph, active, pinned, selected, linking, onHover, onPick, onChild, onBackground }) {
+  function Canvas({ graph, active, peek, pinned, selected, linking, onHover, onPick, onChild, onBackground }) {
     const rootRef = useRef(null);
     const elements = useRef(new Map());
+    // The liquid itself is drawn on its own filtered layer, under the labels and hit targets.
+    const shapes = useRef(new Map());
+    const outlines = useRef(new Map());
+    const swells = useRef(new Map());
     const lines = useRef(new Map());
     const positions = useRef(new Map());
     const view = useRef({ panX: 0, panY: 0, k: 1, width: 0, height: 0, fitted: 0 });
@@ -601,10 +704,44 @@ export function apply(ctx) {
 
     const layout = useMemo(() => layoutTopics(graph.topics, graph.links), [graph]);
     const activeTopic = active ? graph.nodes.get(active) : undefined;
+    // Pieces the reader has split a second time. A new topic starts whole again.
+    const [expanded, setExpanded] = useState(() => new Set());
+    useEffect(() => setExpanded(new Set()), [active]);
+    useEffect(() => {
+      // Opening a nested piece from the panel splits its ancestors so it is on the map.
+      const chain = [];
+      for (let node = selected && graph.nodes.get(selected); node && node.kind === "child"; node = graph.nodes.get(node.parent)) {
+        const parent = graph.nodes.get(node.parent);
+        if (parent && parent.kind === "child") chain.push(parent.id);
+      }
+      if (chain.length) setExpanded((current) => (chain.every((id) => current.has(id)) ? current : new Set([...current, ...chain])));
+    }, [selected, graph]);
+    const peekTopic = !activeTopic && peek ? graph.nodes.get(peek) : undefined;
     const burst = useMemo(
-      () => (activeTopic && activeTopic.kind === "topic" ? burstLayout(activeTopic) : { offsets: new Map(), radius: 0 }),
-      [activeTopic],
+      () =>
+        activeTopic && activeTopic.kind === "topic"
+          ? burstLayout(activeTopic, expanded)
+          : { offsets: new Map(), radius: 0 },
+      [activeTopic, expanded],
     );
+    const budding = false;
+    const split = (node) => {
+      if (node.children.length) {
+        setExpanded((current) => {
+          const next = new Set(current);
+          if (next.has(node.id)) {
+            // Folding a piece folds everything that grew out of it.
+            const fold = (item) => {
+              next.delete(item.id);
+              item.children.forEach(fold);
+            };
+            fold(node);
+          } else next.add(node.id);
+          return next;
+        });
+      }
+      onChild(node);
+    };
     const neighbours = useMemo(() => {
       const set = new Set();
       for (const link of graph.links) {
@@ -615,7 +752,20 @@ export function apply(ctx) {
     }, [graph, active]);
     const burstNodes = useMemo(() => [...burst.offsets.keys()].map((id) => graph.nodes.get(id)).filter(Boolean), [burst, graph]);
 
-    live.current = { graph, layout, active, pinned, burst, neighbours, selected, onHover };
+    live.current = { graph, layout, active, origin: active, peek: peekTopic ? peek : null, pinned, burst, neighbours, selected, onHover };
+
+    useEffect(() => {
+      // Bring a split topic to the middle and pull back far enough to see every piece.
+      const state = view.current;
+      const spot = active ? layout.get(active) : undefined;
+      if (!spot || !state.width) {
+        state.goal = undefined;
+        return;
+      }
+      const room = Math.min(state.width, state.height) / 2 - 56;
+      const k = Math.max(0.42, Math.min(state.k, 1, room / (burst.radius + 70)));
+      state.goal = { k, panX: -spot.x * k, panY: -spot.y * k };
+    }, [active, burst, layout]);
 
     const fit = useCallback(() => {
       const state = view.current;
@@ -659,6 +809,7 @@ export function apply(ctx) {
         const rect = root.getBoundingClientRect();
         const px = event.clientX - rect.left - state.width / 2 - state.panX;
         const py = event.clientY - rect.top - state.height / 2 - state.panY;
+        state.goal = undefined;
         const next = Math.max(0.3, Math.min(1.8, state.k * Math.exp(-event.deltaY * 0.0015)));
         state.panX -= (px / state.k) * (next - state.k);
         state.panY -= (py / state.k) * (next - state.k);
@@ -681,6 +832,13 @@ export function apply(ctx) {
         const time = still ? 0 : now / 1000;
         const ease = still ? 1 : 0.16;
         const store = positions.current;
+        if (state.goal) {
+          const goal = state.goal;
+          state.k += (goal.k - state.k) * ease;
+          state.panX += (goal.panX - state.panX) * ease;
+          state.panY += (goal.panY - state.panY) * ease;
+          if (Math.abs(goal.k - state.k) < 0.002 && Math.hypot(goal.panX - state.panX, goal.panY - state.panY) < 0.5) state.goal = undefined;
+        }
         const originX = state.width / 2 + state.panX;
         const originY = state.height / 2 + state.panY;
         const scale = Math.max(0.62, Math.min(1.15, state.k));
@@ -696,11 +854,11 @@ export function apply(ctx) {
             const dx = spot.x - centre.x;
             const dy = spot.y - centre.y;
             const distance = Math.hypot(dx, dy) || 1;
-            const clear = tree.radius + 96;
-            if (distance < clear) {
-              targetX += (dx / distance) * (clear - distance);
-              targetY += (dy / distance) * (clear - distance);
-            }
+            // Everything moves outward, nearest most, so neighbours keep their order and do not pile up.
+            const clear = tree.radius + 110;
+            const shove = clear * Math.exp(-distance / clear);
+            targetX += (dx / distance) * shove;
+            targetY += (dy / distance) * shove;
           }
           if (topic.id === focus) {
             targetX = spot.x;
@@ -714,11 +872,13 @@ export function apply(ctx) {
           const element = elements.current.get(topic.id);
           if (element) {
             element.style.transform = `translate(${originX + point.x * state.k}px,${originY + point.y * state.k}px) scale(${scale})`;
-            element.style.opacity = topic.pending ? "0.55" : !focus || topic.id === focus ? "1" : near.has(topic.id) ? "0.9" : "0.32";
+            const shape = shapes.current.get(topic.id);
+            if (shape) shape.style.transform = element.style.transform;
+            element.style.opacity = topic.pending ? "0.5" : !focus || topic.id === focus ? "1" : near.has(topic.id) ? "0.85" : "0.38";
             element.style.zIndex = topic.id === focus ? "3" : "1";
           }
         }
-        const home = focus ? store.get(focus) : undefined;
+        const home = live.current.origin ? store.get(live.current.origin) : undefined;
         if (home) {
           for (const [id, offset] of tree.offsets) {
             const from = store.get(offset.parent) || home;
@@ -731,12 +891,25 @@ export function apply(ctx) {
             const element = elements.current.get(id);
             if (element) {
               element.style.transform = `translate(${originX + point.x * state.k}px,${originY + point.y * state.k}px) scale(${scale})`;
+              const shape = shapes.current.get(id);
+              if (shape) shape.style.transform = element.style.transform;
               element.style.opacity = g.nodes.get(id)?.pending ? "0.55" : "1";
               element.style.zIndex = id === chosen ? "5" : "4";
             }
           }
         }
         for (const id of store.keys()) if (!keep.has(id)) store.delete(id);
+        // Every drop keeps moving as one surface. Standing still, it holds its resting shape.
+        const leaning = live.current.peek;
+        for (const [id, outline] of outlines.current) {
+          // A hovered topic leans toward dividing; it relaxes again when the pointer leaves or it splits.
+          const want = id === leaning ? 1 : 0;
+          const was = swells.current.get(id) || 0;
+          const swell = Math.abs(want - was) < 0.004 ? want : was + (want - was) * (still ? 1 : 0.12);
+          if (swell) swells.current.set(id, swell);
+          else swells.current.delete(id);
+          if (!still || swell !== was) outline.element.setAttribute("d", dropPath(id, outline.radius, time, outline.buds, swell));
+        }
         for (const [key, line] of lines.current) {
           const [a, b] = key.split("|");
           const from = store.get(a);
@@ -763,6 +936,7 @@ export function apply(ctx) {
 
     const onPointerDown = (event) => {
       if (event.button !== 0 || event.target.closest("[data-node]")) return;
+      view.current.goal = undefined;
       drag.current = { x: event.clientX, y: event.clientY, panX: view.current.panX, panY: view.current.panY, moved: false };
       event.currentTarget.setPointerCapture?.(event.pointerId);
     };
@@ -805,19 +979,90 @@ export function apply(ctx) {
         strokeOpacity: !active || link.a === active || link.b === active ? 0.75 : 0.25,
       }),
     );
-    const treeLines = burstNodes.map((node) =>
+    const treeLines = (budding ? [] : burstNodes).map((node) =>
       h("line", {
         key: `t:${node.id}`,
         ref: attach(lines, `${burst.offsets.get(node.id).parent}|${node.id}`),
-        stroke: TYPES[node.type].color,
-        strokeWidth: 1.5,
-        strokeOpacity: 0.55,
+        stroke: "var(--text-tertiary)",
+        strokeWidth: 1,
+        strokeOpacity: 0.5,
       }),
     );
 
+    const anchor = { position: "absolute", left: 0, top: 0, width: 0, height: 0, willChange: "transform" };
+    const drop = (id, radius, fill, grow, buds = 0) =>
+      h(
+        "svg",
+        { className: "xtb-drop", style: { transform: `scale(${grow})` } },
+        h("path", {
+          ref: (element) => {
+            if (element) outlines.current.set(id, { element, radius, buds });
+            else outlines.current.delete(id);
+          },
+          d: dropPath(id, radius, 0),
+          style: { fill },
+        }),
+      );
+    const topicInk = (topic) => (topic.pending ? 34 : !active ? (topic.id === peek ? 90 : 74) : topic.id === active ? 92 : neighbours.has(topic.id) ? 50 : 24);
+    const topicShapes = graph.topics.map((topic) =>
+      h(
+        "div",
+        { key: topic.id, ref: attach(shapes, topic.id), style: anchor },
+        drop(topic.id, topicRadius(topic), ink(topicInk(topic)), topic.id === peek && !active ? 1.04 : 1, Math.min(topic.children.length, 9)),
+      ),
+    );
+    const childShapes = burstNodes.map((node) =>
+      h(
+        "div",
+        { key: node.id, ref: attach(shapes, node.id), style: anchor },
+        h("div", { className: "xtb-born" }, drop(node.id, childRadius(node), ink(node.pending ? 30 : node.id === selected ? 92 : 58), budding ? 0.5 : 1)),
+      ),
+    );
+
+    const caption = (text, top, width, strong, owner) =>
+      h(
+        "div",
+        { style: { position: "absolute", top, left: -width / 2, width, pointerEvents: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 5 } },
+        captionText(text, width, strong),
+        owner ? h(Author, { pubkey: owner, size: 16, style: { maxWidth: width, fontSize: 12, color: "var(--text-secondary)" } }) : null,
+      );
+    const captionText = (text, width, strong) =>
+      h(
+        "div",
+        {
+          style: {
+            width,
+            textAlign: "center",
+            fontSize: strong ? 15 : width < 150 ? 12.5 : 14,
+            lineHeight: 1.35,
+            fontWeight: strong ? 700 : width < 150 ? 500 : 600,
+            color: "var(--text-primary)",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            wordBreak: "break-word",
+          },
+        },
+        text,
+      );
+    const shell = (radius, cursor) => ({
+      position: "absolute",
+      left: -radius,
+      top: -radius,
+      width: radius * 2,
+      height: radius * 2,
+      padding: 0,
+      border: "none",
+      background: "transparent",
+      borderRadius: "50%",
+      font: "inherit",
+      cursor,
+    });
+    const face = { position: "absolute", inset: 0, display: "grid", placeItems: "center", color: "var(--bg-app, #17181b)", fontWeight: 700 };
+
     const topicNodes = graph.topics.map((topic) => {
       const radius = topicRadius(topic);
-      const colour = topicColour(topic.id);
       const isActive = topic.id === active;
       return h(
         "div",
@@ -826,21 +1071,6 @@ export function apply(ctx) {
           ref: attach(elements, topic.id),
           style: { position: "absolute", left: 0, top: 0, width: 0, height: 0, opacity: 0, willChange: "transform" },
         },
-        isActive &&
-          h("span", {
-            className: "xtb-ring",
-            style: {
-              position: "absolute",
-              left: -radius,
-              top: -radius,
-              width: radius * 2,
-              height: radius * 2,
-              borderRadius: "50%",
-              border: `2px solid ${colour}`,
-              animation: "xtb-pulse 1.6s ease-out infinite",
-              pointerEvents: "none",
-            },
-          }),
         h(
           "button",
           {
@@ -848,74 +1078,27 @@ export function apply(ctx) {
             className: "xtb-topic",
             "data-node": "topic",
             "aria-label": `选题：${topic.title}，${topic.count} 条相关内容`,
-            "aria-pressed": topic.id === pinned,
+            "aria-expanded": isActive,
             title: topic.title,
             onMouseEnter: () => onHover(topic.id),
+            onMouseLeave: () => onHover(null),
             onFocus: () => onHover(topic.id),
+            onBlur: () => onHover(null),
             onClick: () => onPick(topic.id),
-            style: {
-              position: "absolute",
-              left: -radius,
-              top: -radius,
-              width: radius * 2,
-              height: radius * 2,
-              padding: 0,
-              border: "none",
-              background: "transparent",
-              borderRadius: "50%",
-              cursor: linking && topic.id !== pinned ? "crosshair" : "pointer",
-            },
+            style: shell(radius, linking && topic.id !== pinned ? "crosshair" : "pointer"),
           },
-          h(
-            "span",
-            {
-              className: "xtb-dot",
-              style: {
-                display: "grid",
-                placeItems: "center",
-                width: "100%",
-                height: "100%",
-                borderRadius: "50%",
-                background: colour,
-                color: "#fff",
-                fontSize: 13,
-                fontWeight: 700,
-                boxShadow: isActive
-                  ? `0 0 0 6px color-mix(in srgb, ${colour} 28%, transparent), 0 6px 22px color-mix(in srgb, ${colour} 55%, transparent)`
-                  : `0 0 0 5px color-mix(in srgb, ${colour} 16%, transparent)`,
-              },
-            },
-            topic.count || "✦",
-          ),
+          h("span", { className: "xtb-face", style: { ...face, fontSize: Math.round(12 + radius * 0.12) } }, topic.count || "·"),
         ),
-        h(
-          "div",
-          {
-            style: {
-              position: "absolute",
-              top: radius + 8,
-              left: -86,
-              width: 172,
-              textAlign: "center",
-              fontSize: isActive ? 15 : 14,
-              lineHeight: 1.35,
-              fontWeight: isActive ? 700 : 600,
-              color: "var(--text-primary)",
-              pointerEvents: "none",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-            },
-          },
-          topic.title,
-        ),
+        caption(topic.title, radius + 12, 172, isActive, isActive ? topic.author : undefined),
       );
     });
 
     const childNodes = burstNodes.map((node) => {
       const type = TYPES[node.type];
       const label = childLabel(node);
+      const radius = childRadius(node);
+      const open = expanded.has(node.id);
+      const more = node.children.length;
       return h(
         "div",
         {
@@ -927,52 +1110,55 @@ export function apply(ctx) {
           "button",
           {
             type: "button",
-            className: "xtb-pill",
+            className: "xtb-pill xtb-born",
             "data-node": "child",
+            "aria-label": `${type.label}：${clip(label, 120)}${more ? `，${open ? "已分裂" : "可分裂"} ${more} 条` : ""}`,
+            "aria-expanded": more ? open : undefined,
             title: `${type.label}：${clip(label, 120)}`,
-            onClick: () => onChild(node),
+            onClick: () => split(node),
+            tabIndex: budding ? -1 : undefined,
+            "aria-hidden": budding || undefined,
             style: {
-              position: "absolute",
-              transform: "translate(-50%,-50%)",
-              display: "flex",
-              alignItems: "flex-start",
-              gap: 6,
-              width: 164,
-              boxSizing: "border-box",
-              font: "inherit",
-              fontSize: 13,
-              lineHeight: 1.4,
-              textAlign: "left",
-              padding: "6px 9px",
-              borderRadius: 8,
-              border: "1px solid var(--border)",
-              borderLeft: `3px solid ${type.color}`,
-              boxShadow: "0 1px 3px rgba(0,0,0,.08)",
-              outline: node.id === selected ? `2px solid ${type.color}` : undefined,
-              outlineOffset: 2,
-              background: "var(--surface-panel)",
-              color: "var(--text-primary)",
-              cursor: "pointer",
+              ...shell(radius, "pointer"),
+              // A bud is not a target yet: the pointer stays on the topic it grows from.
+              pointerEvents: budding ? "none" : undefined,
+              transform: budding ? "scale(.42)" : "scale(1)",
+              transition: "transform .45s cubic-bezier(.34,1.56,.64,1)",
             },
           },
-          h("span", { "aria-hidden": true }, type.icon),
           h(
             "span",
-            {
-              style: {
-                flex: 1,
-                minWidth: 0,
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-                wordBreak: "break-word",
-              },
-            },
-            label,
+            { style: { position: "absolute", inset: 0 } },
+            h("span", { className: "xtb-face", "aria-hidden": true, style: { ...face, fontSize: Math.round(radius * 0.7), filter: "grayscale(1)", opacity: budding ? 0 : 1 } }, type.icon),
+            more && !open && !budding
+              ? h(
+                  "span",
+                  {
+                    "aria-hidden": true,
+                    style: {
+                      position: "absolute",
+                      right: -6,
+                      top: -6,
+                      minWidth: 18,
+                      height: 18,
+                      padding: "0 4px",
+                      boxSizing: "border-box",
+                      borderRadius: 9,
+                      background: "var(--surface-panel)",
+                      border: "1px solid var(--text-primary)",
+                      color: "var(--text-primary)",
+                      fontSize: 11,
+                      fontWeight: 700,
+                      lineHeight: "16px",
+                      textAlign: "center",
+                    },
+                  },
+                  more,
+                )
+              : null,
           ),
-          node.children.length ? h("span", { style: { color: type.color, fontWeight: 700 } }, `+${node.children.length}`) : null,
         ),
+        budding ? null : caption(label, radius + 8, 124, false, node.id === selected ? node.author : undefined),
       );
     });
 
@@ -997,7 +1183,24 @@ export function apply(ctx) {
           backgroundSize: "22px 22px",
         },
       },
-      h("svg", { style: { position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }, "aria-hidden": true }, linkLines, treeLines),
+      h(
+        "svg",
+        { style: { position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }, "aria-hidden": true },
+        // Blur, then cut the alpha back hard: shapes that come close pull into one another like liquid.
+        h(
+          "defs",
+          null,
+          h(
+            "filter",
+            { id: "xtb-goo", x: "-10%", y: "-10%", width: "120%", height: "120%", colorInterpolationFilters: "sRGB" },
+            h("feGaussianBlur", { in: "SourceGraphic", stdDeviation: 9, result: "soft" }),
+            h("feColorMatrix", { in: "soft", mode: "matrix", values: "1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -11" }),
+          ),
+        ),
+        linkLines,
+        treeLines,
+      ),
+      h("div", { className: "xtb-goo", "aria-hidden": true }, topicShapes, childShapes),
       topicNodes,
       childNodes,
     );
@@ -1257,7 +1460,7 @@ export function apply(ctx) {
         { style: { display: "flex", alignItems: "center", gap: 6, height: 24, fontSize: 12, color: "var(--text-tertiary)" } },
         h("span", { "aria-hidden": true, style: { width: 7, height: 7, borderRadius: "50%", background: type.color, flexShrink: 0 } }),
         h("span", { style: { color: "var(--text-secondary)", fontWeight: 600 } }, type.short),
-        h("span", { style: { flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, `${nameOf(node.author)} · ${formatTime(node.at)}`),
+        h(Author, { pubkey: node.author, size: 16, after: `· ${formatTime(node.at)}`, style: { flex: 1 } }),
         h(
           "span",
           { className: "xtb-acts", style: { display: "flex" } },
@@ -1353,7 +1556,7 @@ export function apply(ctx) {
           "div",
           { style: { display: "flex", alignItems: "center", gap: 2 } },
           h("span", { "aria-hidden": true, style: { width: 10, height: 10, borderRadius: "50%", background: topicColour(topic.id) } }),
-          h("span", { style: { flex: 1, minWidth: 0, marginLeft: 8, fontSize: 12, color: "var(--text-tertiary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, `${nameOf(topic.author)} · ${formatTime(topic.at)}`),
+          h(Author, { pubkey: topic.author, size: 20, after: `· ${formatTime(topic.at)}`, style: { flex: 1, marginLeft: 8, fontSize: 13, color: "var(--text-secondary)" } }),
           h(Button, { icon: "plus", label: "添加内容", on: adding, "aria-expanded": adding, onClick: () => setAdding(!adding) }),
           h(Button, { icon: "link", label: "连接选题", on: linking, "aria-pressed": linking, onClick: () => onLinking(!linking) }),
           topic.author === viewer
@@ -1488,11 +1691,36 @@ export function apply(ctx) {
         return undefined;
       }
     });
-    const authors = useMemo(() => [...new Set([...graph.nodes.values()].map((node) => node.author))].sort().join(","), [graph]);
+    const personOf = (pubkey) => {
+      try {
+        const owner = profiles?.owner?.(pubkey);
+        const key = typeof owner === "string" ? owner : owner?.pubkey;
+        return typeof key === "string" && HEX64.test(key) ? key : pubkey;
+      } catch {
+        return pubkey;
+      }
+    };
+    const writers = useMemo(() => [...new Set([...graph.nodes.values()].map((node) => node.author))], [graph]);
+    // Owners become known as agent profiles load, so the list is recomputed with the profile map.
+    const authors = [...new Set(writers.flatMap((pubkey) => [pubkey, personOf(pubkey)]))].sort().join(",");
     useEffect(() => {
       if (authors) Promise.resolve(profiles?.ensure?.(authors.split(","))).catch(() => {});
     }, [authors, profiles]);
-    const nameOf = (pubkey) => (pubkey === viewer ? "我" : profileMap?.get?.(pubkey)?.name || `${pubkey.slice(0, 6)}…`);
+    const nameOf = (pubkey) => profileMap?.get?.(pubkey)?.name || (pubkey === viewer ? "我" : `${pubkey.slice(0, 6)}…`);
+    people.name = nameOf;
+    people.person = personOf;
+    people.avatar = (pubkey) => {
+      const profile = profileMap?.get?.(pubkey);
+      const picture = profile?.picture || profile?.avatar;
+      if (typeof picture !== "string" || !picture) return undefined;
+      try {
+        // The community serves a small, access-checked copy; fall back to the address as published.
+        const sized = session.media?.(picture, "small");
+        return typeof sized === "string" && sized ? sized : picture;
+      } catch {
+        return picture;
+      }
+    };
 
     const [hover, setHover] = useState(null);
     const [pinned, setPinned] = useState(null);
@@ -1502,7 +1730,8 @@ export function apply(ctx) {
     const [notice, setNotice] = useState("");
 
     const pinnedTopic = pinned ? graph.nodes.get(pinned) : undefined;
-    const active = pinnedTopic ? pinned : hover && graph.nodes.has(hover) ? hover : null;
+    // A topic splits when it is clicked, not when the pointer passes over it.
+    const active = pinnedTopic ? pinned : null;
     useEffect(() => {
       if (pinned && !pinnedTopic && main.status === "ready") {
         setPinned(null);
@@ -1679,9 +1908,8 @@ export function apply(ctx) {
           pinned: pinnedTopic ? pinned : null,
           selected,
           linking,
-          onHover: (id) => {
-            if (!pinnedTopic) setHover(id);
-          },
+          peek: !pinnedTopic && hover && graph.nodes.has(hover) ? hover : null,
+          onHover: setHover,
           onPick: pick,
           onChild: (node) => {
             setPinned(node.topic);
@@ -1903,6 +2131,44 @@ export function apply(ctx) {
       ]
         .filter(Boolean)
         .join("\n");
+    },
+  });
+
+  ctx.agents.addTool({
+    name: "xhs_topics_inbox",
+    description:
+      "读取选题频道里还没进灵感图的普通聊天消息，供你判断哪些值得收录。聊天不会自动上图：由你挑出有价值的，整理、改写、归类后，用 xhs_topics_add 建选题，或用 xhs_topics_add_content / xhs_topics_add_post 挂到已有选题下。闲聊、寒暄、重复的不要收。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        hours: { type: "number", description: "只看最近多少小时的消息，默认 72。" },
+        limit: { type: "number", description: "最多返回多少条，默认 50，上限 200。" },
+        channel: CHANNEL_HINT,
+      },
+      additionalProperties: false,
+    },
+    async call(client, context, args) {
+      const session = sessionOf(client);
+      const channel = channelOf(session, field(args, "channel"));
+      const hours = Number.isFinite(args.hours) && args.hours > 0 ? args.hours : 72;
+      const limit = Math.min(200, Number.isFinite(args.limit) && args.limit > 0 ? Math.floor(args.limit) : 50);
+      const graph = await graphOf(session, channel.id, client.signal);
+      const since = Date.now() / 1000 - hours * 3600;
+      const recent = graph.loose.filter((item) => item.at >= since);
+      if (!recent.length) return `频道「${channel.name}」最近 ${hours} 小时没有未收录的聊天消息。`;
+      const shown = recent.slice(0, limit);
+      await Promise.resolve(session.profiles?.ensure?.([...new Set(shown.map((item) => item.author))])).catch(() => {});
+      const names = session.profiles?.snapshot?.();
+      const rows = shown.map((item) => {
+        const who = names?.get?.(item.author)?.name || item.author.slice(0, 8);
+        const where = item.under ? `（在选题 [${item.under.slice(0, 8)}] ${graph.nodes.get(item.under).title} 的话题串里）` : "";
+        return `- [${item.id.slice(0, 8)}] ${formatTime(item.at)} ${who}${where}：${clip(item.text.replace(/\s+/g, " "), 600)}`;
+      });
+      return [
+        `频道「${channel.name}」最近 ${hours} 小时有 ${recent.length} 条未收录的聊天${recent.length > shown.length ? `，显示最新 ${shown.length} 条` : ""}：`,
+        ...rows,
+        "这些只是聊天原文，没有上图。挑出值得收录的，整理后用写入工具添加；不确定是否值得收录时先问人。",
+      ].join("\n");
     },
   });
 
